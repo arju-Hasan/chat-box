@@ -1,35 +1,13 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chat Box</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <div class="container">
-    <!-- User Login Section -->
-    <div class="login-section" id="login-section">
-      <label for="username">Enter your name:</label>
-      <input type="text" id="username" placeholder="Type your name..." />
-      <button id="login-btn">Login</button>
-    </div>
-
-    <!-- Chat Section (Hidden Initially) -->
-    <div class="chat-section" id="chat-section" style="display: none;">
-      <div class="message-box" id="message-box">
-        <!-- Messages will be shown here -->
-      </div>
-
-      <div class="input-area">
-        <input type="text" id="message-input" placeholder="Type your message..." />
-        <button id="send-btn">Send</button>
-      </div>
-    </div>
-  </div>
-  <!--real time message seen er jonno ata -->
-  <script type="module" src="script.js"></script>
-
-  <!--<script src="script.js"></script>-->
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>my-chat-box</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
