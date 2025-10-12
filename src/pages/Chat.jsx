@@ -18,16 +18,21 @@ export default function ChatPage() {
     }
 
     
-    const childAddedCallback = (snapshot) => {
-      const val = snapshot.val();
-      const item = {
-        id: snapshot.key || Math.random().toString(36).slice(2),
-        user: val.user,
-        text: val.text,
-        createdAt: val.createdAt || Date.now(),
-      };
-      setMessages((prev) => [...prev, item]);
-    };
+   const childAddedCallback = (snapshot) => {
+  const val = snapshot.val();
+  const newItem = {
+    id: snapshot.key || Math.random().toString(36).slice(2),
+    user: val.user,
+    text: val.text,
+    createdAt: val.createdAt || Date.now(),
+  };
+
+    setMessages((prev) => {
+    const alreadyExists = prev.some((msg) => msg.id === newItem.id);
+    if (alreadyExists) return prev;
+    return [...prev, newItem];
+  });
+};
 
     
     dbOnChildAdded(messagesRef, childAddedCallback);
@@ -87,6 +92,8 @@ export default function ChatPage() {
   }
 
   const currentUser = localStorage.getItem("chat_username");
+  const user = localStorage.getItem("user");
+  console.log(user);
 
   return (
     <div className="flex flex-col h-[100vh]">
@@ -149,13 +156,9 @@ export default function ChatPage() {
               No messages yet — say hi 👋
             </div>
           ) : (
-            messages.map((m) => (
-              <div
-                key={m.id}
-                className={`mb-2 flex ${
-                  m.user === currentUser ? "justify-end" : "justify-start"
-                }`}
-              >
+            
+              messages.map((m) => (
+            <div key={m.id} className={`mb-2 flex ${m.user === currentUser ? "justify-end" : "justify-start"}`}>
                 <div
                   className={`max-w-[80%] break-words p-3 rounded-lg shadow ${
                     m.user === currentUser
@@ -171,8 +174,9 @@ export default function ChatPage() {
                   </div>
                   <div className="whitespace-pre-line">{m.text}</div>
                 </div>
-              </div>
-            ))
+            </div>
+          ))
+          
           )}
         </div>
 

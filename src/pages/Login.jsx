@@ -7,6 +7,7 @@ import { auth } from "../Firebase/Firebase.init";
 
 export default function LoginPage() {
   const [name, setName] = useState("");
+  const [user, setUser] =useState("")
   const navigate = useNavigate();
   const googleProvider = new GoogleAuthProvider();
 
@@ -16,12 +17,15 @@ export default function LoginPage() {
     if (!trimmed) return alert("⚠️ Please enter a valid username!");
     // store locally (so Chat page can read it)
     localStorage.setItem("chat_username", trimmed);
+    localStorage.setItem(user);
     navigate("/chat");
+
   }
    const HandelGithubSignin =() =>{
     signInWithPopup(auth, googleProvider ).then(result=>{
             console.log(result);
-            setName(result.user.displayName)
+            setName(result.user.displayName);
+            setUser(result.user);
         }).catch(error=>{
             console.log(error);
         })
@@ -39,7 +43,7 @@ export default function LoginPage() {
         </label> */}
         <input
           id="username"
-          value={name}
+          value={user.displayName}
           onChange={(e) => setName(e.target.value)}
           placeholder="Your Username..."
           className="w-full p-2 rounded border border-green-700 text-black"
